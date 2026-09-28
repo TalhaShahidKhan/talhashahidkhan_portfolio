@@ -1,6 +1,18 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
-export async function fetchProjects() {
+export interface Project {
+  id: string;
+  title: string;
+  description: string;
+  images: string[];
+  technologies: string[];
+  liveUrl?: string | null;
+  githubUrl?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export async function fetchProjects(): Promise<Project[]> {
   try {
     const res = await fetch(`${API_URL}/projects`, { cache: "no-store" });
     if (!res.ok) {
@@ -14,7 +26,20 @@ export async function fetchProjects() {
   }
 }
 
-export async function fetchServices() {
+export interface Service {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  deliveryDays?: number | null;
+  revisions?: number | null;
+  features: string[];
+  isFeatured: boolean;
+  status: string;
+}
+
+export async function fetchServices(): Promise<Service[]> {
   try {
     const res = await fetch(`${API_URL}/services`, { cache: "no-store" });
     if (!res.ok) {
@@ -24,6 +49,31 @@ export async function fetchServices() {
     return res.json();
   } catch (e) {
     console.error("Error fetching services:", e);
+    return [];
+  }
+}
+
+export interface ServicePackage {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  deliveryDays?: number | null;
+  revisions?: number | null;
+  features: string[];
+  status: string;
+}
+
+export async function fetchServicePackages(): Promise<ServicePackage[]> {
+  try {
+    const res = await fetch(`${API_URL}/service-packages`, { cache: "no-store" });
+    if (!res.ok) {
+      console.error("Failed to fetch service packages");
+      return [];
+    }
+    return res.json();
+  } catch (e) {
+    console.error("Error fetching service packages:", e);
     return [];
   }
 }
@@ -95,7 +145,6 @@ export async function submitContact(data: ContactData) {
 }
 export interface ServiceRequestData {
   serviceId: string;
-  packageId?: string;
   name: string;
   email: string;
   whatsapp?: string;
@@ -111,6 +160,27 @@ export async function submitServiceRequest(data: ServiceRequestData) {
   });
   if (!res.ok) {
     throw new Error("Failed to submit service request");
+  }
+  return res.json();
+}
+
+export interface ServicePackageRequestData {
+  packageId: string;
+  name: string;
+  email: string;
+  whatsapp?: string;
+  message: string;
+  additionalRequirements?: string[];
+}
+
+export async function submitServicePackageRequest(data: ServicePackageRequestData) {
+  const res = await fetch(`${API_URL}/service-package-requests`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    throw new Error("Failed to submit service package request");
   }
   return res.json();
 }

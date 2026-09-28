@@ -11,12 +11,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { submitServiceRequest } from "@/lib/api";
+import { submitServicePackageRequest } from "@/lib/api";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-interface ServiceRequestFormData {
+interface ServicePackageRequestFormData {
   name: string;
   email: string;
   whatsapp?: string;
@@ -24,12 +24,12 @@ interface ServiceRequestFormData {
   requirements?: string;
 }
 
-export function ServiceRequestModal({
-  serviceId,
+export function ServicePackageRequestModal({
+  packageId,
   packageName,
   children,
 }: {
-  serviceId: string;
+  packageId: string;
   packageName?: string;
   children: React.ReactElement;
 }) {
@@ -41,13 +41,13 @@ export function ServiceRequestModal({
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ServiceRequestFormData>();
+  } = useForm<ServicePackageRequestFormData>();
 
-  const onSubmit = async (data: ServiceRequestFormData) => {
+  const onSubmit = async (data: ServicePackageRequestFormData) => {
     setLoading(true);
     try {
-      await submitServiceRequest({
-        serviceId,
+      await submitServicePackageRequest({
+        packageId,
         name: data.name,
         email: data.email,
         whatsapp: data.whatsapp,
@@ -56,7 +56,7 @@ export function ServiceRequestModal({
           ? data.requirements.split(",").map((s: string) => s.trim())
           : [],
       });
-      toast.success("Service request submitted successfully!");
+      toast.success("Service package request submitted successfully!");
       reset();
       setOpen(false);
     } catch (error) {
@@ -71,9 +71,9 @@ export function ServiceRequestModal({
       <DialogTrigger render={children} />
       <DialogContent className="sm:max-w-106.25">
         <DialogHeader>
-          <DialogTitle>Request {packageName || "Service"}</DialogTitle>
+          <DialogTitle>Request {packageName || "Package"}</DialogTitle>
           <DialogDescription>
-            Fill out the form below to request this service. I&apos;ll get back
+            Fill out the form below to request this package. I&apos;ll get back
             to you shortly.
           </DialogDescription>
         </DialogHeader>
