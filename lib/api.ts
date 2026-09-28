@@ -2,12 +2,14 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
 export interface Project {
   id: string;
-  title: string;
+  name: string;
+  slug: string;
   description: string;
   images: string[];
-  technologies: string[];
-  liveUrl?: string | null;
-  githubUrl?: string | null;
+  techStack: string[];
+  tags: string[];
+  liveLink?: string | null;
+  githubRepository?: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -23,6 +25,20 @@ export async function fetchProjects(): Promise<Project[]> {
   } catch (e) {
     console.error("Error fetching projects:", e);
     return [];
+  }
+}
+
+export async function fetchProjectBySlug(slug: string): Promise<Project | null> {
+  try {
+    const res = await fetch(`${API_URL}/projects/${slug}`, { cache: "no-store" });
+    if (!res.ok) {
+      console.error("Failed to fetch project by slug");
+      return null;
+    }
+    return res.json();
+  } catch (e) {
+    console.error("Error fetching project by slug:", e);
+    return null;
   }
 }
 
@@ -183,4 +199,24 @@ export async function submitServicePackageRequest(data: ServicePackageRequestDat
     throw new Error("Failed to submit service package request");
   }
   return res.json();
+}
+
+export interface RecordPageVisitData {
+  route: string;
+  pageUrl: string;
+}
+
+export async function recordPageVisit(data: RecordPageVisitData) {
+  try {
+    const res = await fetch(`${API_URL}/analytics/pages/visits`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    if (!res.ok) {
+      console.error("Failed to record page visit");
+    }
+  } catch (e) {
+    console.error("Error recording page visit:", e);
+  }
 }

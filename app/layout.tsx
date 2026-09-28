@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 import { Toaster } from "@/components/ui/sonner";
-
+import { PageTracker } from "@/components/PageTracker";
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className={cn("dark font-mono", geistMono.variable, jetbrainsMonoHeading.variable)}>
@@ -24,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <main className="flex-1">{children}</main>
         <Footer />
         <Toaster />
+        <PageTracker />
       </body>
     </html>
   );

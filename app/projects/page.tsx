@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
 import Image from "next/image";
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -29,29 +30,30 @@ export default async function ProjectsPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project: Project) => (
-            <Card
-              key={project.id}
-              className="overflow-hidden flex flex-col hover:border-primary/50 transition-colors"
-            >
-              {project.images && project.images.length > 0 && (
-                <div className="w-full h-48 bg-muted overflow-hidden relative">
-                  <Image
-                    src={project.images[0]}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform hover:scale-105"
-                  />
+            <Link href={`/projects/${project.slug}`} key={project.id}>
+              <Card
+                className="overflow-hidden flex flex-col hover:border-primary/50 transition-colors h-full"
+              >
+                {project.images && project.images.length > 0 && (
+                  <div className="w-full h-48 bg-muted overflow-hidden relative">
+                    <Image
+                      src={project.images[0]}
+                      alt={project.name}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      className="object-cover transition-transform hover:scale-105"
+                    />
                 </div>
               )}
               <CardHeader>
-                <CardTitle>{project.title}</CardTitle>
+                <CardTitle>{project.name}</CardTitle>
                 <CardDescription className="line-clamp-2">
                   {project.description}
                 </CardDescription>
               </CardHeader>
               <CardContent className="mt-auto">
                 <div className="flex flex-wrap gap-2">
-                  {project.technologies?.map((tag: string) => (
+                  {project.techStack?.map((tag: string) => (
                     <Badge key={tag} variant="secondary">
                       {tag}
                     </Badge>
@@ -59,6 +61,7 @@ export default async function ProjectsPage() {
                 </div>
               </CardContent>
             </Card>
+          </Link>
           ))}
         </div>
       )}
