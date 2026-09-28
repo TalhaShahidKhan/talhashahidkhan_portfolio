@@ -28,7 +28,18 @@ export async function fetchServices() {
   }
 }
 
-export async function fetchPosts() {
+export interface Post {
+  id: string;
+  title: string;
+  slug: string;
+  content: string;
+  imageUrl?: string | null;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export async function fetchPosts(): Promise<Post[]> {
   try {
     const res = await fetch(`${API_URL}/posts`, { cache: "no-store" });
     if (!res.ok) {
