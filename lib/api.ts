@@ -220,3 +220,18 @@ export async function recordPageVisit(data: RecordPageVisitData) {
     console.error("Error recording page visit:", e);
   }
 }
+
+export async function recordPostEvent(postId: string, event: "VIEW" | "SHARE" | "CLICK") {
+  try {
+    const res = await fetch(`${API_URL}/analytics/posts/${postId}/events`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ event }),
+    });
+    if (!res.ok) {
+      console.error(`Failed to record post event ${event} for post ${postId}`);
+    }
+  } catch (e) {
+    console.error(`Error recording post event ${event}:`, e);
+  }
+}

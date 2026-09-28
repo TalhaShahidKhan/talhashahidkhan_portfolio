@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { fetchPosts, type Post } from "@/lib/api";
+import { PostViewTracker, ShareButton } from "@/components/PostAnalyticsTrackers";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -31,11 +32,14 @@ export default async function BlogPostPage({
         <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight mb-4">
           {post.title}
         </h1>
-        {post.createdAt && (
-          <p className="text-muted-foreground">
-            {new Date(post.createdAt).toLocaleDateString()}
-          </p>
-        )}
+        <div className="flex items-center justify-between">
+          {post.createdAt && (
+            <p className="text-muted-foreground">
+              {new Date(post.createdAt).toLocaleDateString()}
+            </p>
+          )}
+          <ShareButton postId={post.id} title={post.title} />
+        </div>
       </div>
 
       {post.imageUrl && (
@@ -56,6 +60,8 @@ export default async function BlogPostPage({
           {post.content}
         </ReactMarkdown>
       </div>
+      
+      <PostViewTracker postId={post.id} />
     </article>
   );
 }

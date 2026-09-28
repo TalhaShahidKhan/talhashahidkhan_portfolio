@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { fetchPosts, type Post } from "@/lib/api";
-import Link from "next/link";
+import { TrackedPostLink } from "@/components/TrackedPostLink";
 
 export default async function BlogPage() {
   const posts = await fetchPosts();
@@ -26,7 +26,7 @@ export default async function BlogPage() {
       ) : (
         <div className="flex flex-col gap-6">
           {posts.map((post: Post) => (
-            <Link key={post.id} href={`/blog/${post.slug}`}>
+            <TrackedPostLink key={post.id} postId={post.id} slug={post.slug}>
               <Card className="hover:border-primary/50 transition-colors">
                 <CardHeader>
                   <CardTitle className="text-2xl">{post.title}</CardTitle>
@@ -42,7 +42,7 @@ export default async function BlogPage() {
                   </p>
                 </CardContent>
               </Card>
-            </Link>
+            </TrackedPostLink>
           ))}
         </div>
       )}
