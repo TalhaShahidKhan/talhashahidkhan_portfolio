@@ -14,7 +14,7 @@ export function PageTracker() {
     if (pathname) {
       recordPageVisit({
         route: pathname,
-        pageUrl: pathname,
+        pageUrl: window.location.href,
       });
     }
   }, [pathname]);
