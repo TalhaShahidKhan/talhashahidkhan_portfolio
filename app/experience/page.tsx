@@ -1,13 +1,13 @@
 export const dynamic = "force-dynamic";
 import { Badge } from "@/components/ui/badge";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+  Timeline,
+  TimelineItem,
+  TimelineIcon,
+  TimelineContent,
+} from "@/components/ui/timeline";
 import { fetchExperiences, type Experience } from "@/lib/api";
+import { Briefcase } from "lucide-react";
 
 export default async function ExperiencePage() {
   const experiences = await fetchExperiences();
@@ -31,8 +31,8 @@ export default async function ExperiencePage() {
       {sortedExperiences.length === 0 ? (
         <p className="text-muted-foreground">No experience records found.</p>
       ) : (
-        <div className="flex flex-col gap-6">
-          {sortedExperiences.map((exp: Experience) => {
+        <Timeline>
+          {sortedExperiences.map((exp: Experience, index: number) => {
             const startDateStr = new Date(exp.startDate).toLocaleDateString(
               undefined,
               { month: "short", year: "numeric" },
@@ -45,32 +45,28 @@ export default async function ExperiencePage() {
               : "Present";
 
             return (
-              <Card
-                key={exp.id}
-                className="overflow-hidden flex flex-col border border-border/50 bg-card hover:border-primary/50 transition-colors"
-              >
-                <CardHeader>
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-2">
-                    <div>
-                      <CardTitle className="text-xl">{exp.title}</CardTitle>
-                      <CardDescription className="text-lg font-medium text-foreground mt-1">
-                        {exp.company}
-                      </CardDescription>
-                    </div>
-                    <Badge variant="secondary" className="w-fit text-sm">
+              <TimelineItem key={exp.id}>
+                <TimelineIcon className={index % 2 === 0 ? "bg-primary" : "bg-muted text-muted-foreground"}>
+                  <Briefcase className="w-4 h-4 text-primary-foreground" />
+                </TimelineIcon>
+                <TimelineContent>
+                  <div className="flex flex-col gap-1 mb-4">
+                    <span className="text-sm font-semibold text-primary">
                       {startDateStr} - {endDateStr}
-                    </Badge>
+                    </span>
+                    <h3 className="text-xl font-bold">{exp.title}</h3>
+                    <span className="text-base font-medium text-foreground">
+                      {exp.company}
+                    </span>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground whitespace-pre-line">
+                  <p className="text-muted-foreground whitespace-pre-line text-sm">
                     {exp.description}
                   </p>
-                </CardContent>
-              </Card>
+                </TimelineContent>
+              </TimelineItem>
             );
           })}
-        </div>
+        </Timeline>
       )}
     </div>
   );
