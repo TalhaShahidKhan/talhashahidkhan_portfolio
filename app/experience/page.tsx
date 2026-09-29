@@ -1,10 +1,16 @@
 export const dynamic = "force-dynamic";
-import { Badge } from "@/components/ui/badge";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Experience",
+  description: "My professional work experience and career history.",
+};
+
 import {
   Timeline,
-  TimelineItem,
-  TimelineIcon,
   TimelineContent,
+  TimelineIcon,
+  TimelineItem,
 } from "@/components/ui/timeline";
 import { fetchExperiences, type Experience } from "@/lib/api";
 import { Briefcase } from "lucide-react";
@@ -46,7 +52,13 @@ export default async function ExperiencePage() {
 
             return (
               <TimelineItem key={exp.id}>
-                <TimelineIcon className={index % 2 === 0 ? "bg-primary" : "bg-muted text-muted-foreground"}>
+                <TimelineIcon
+                  className={
+                    index % 2 === 0
+                      ? "bg-primary"
+                      : "bg-muted text-muted-foreground"
+                  }
+                >
                   <Briefcase className="w-4 h-4 text-primary-foreground" />
                 </TimelineIcon>
                 <TimelineContent>

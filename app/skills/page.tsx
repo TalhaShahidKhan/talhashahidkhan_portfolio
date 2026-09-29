@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Skills",
+  description: "An overview of my technical skills and tools categorized by domain.",
+};
+
 import Image from "next/image";
 import { categorizedSkills } from "@/components/SkillsSection";
 import {

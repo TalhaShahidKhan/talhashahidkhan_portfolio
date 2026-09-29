@@ -1,4 +1,10 @@
 export const dynamic = "force-dynamic";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "A collection of my recent work, showcasing web development, design, and complex problem-solving.",
+};
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -51,7 +57,7 @@ export default async function ProjectsPage() {
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 ) : (
                   <div className="w-full h-56 bg-muted flex items-center justify-center relative">

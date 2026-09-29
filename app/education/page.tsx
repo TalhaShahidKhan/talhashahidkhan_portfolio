@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Education",
+  description: "My academic background and educational journey.",
+};
+
 import {
   Timeline,
   TimelineContent,

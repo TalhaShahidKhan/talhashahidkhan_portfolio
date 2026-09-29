@@ -59,7 +59,7 @@ export function ServiceRequestModal({
       toast.success("Service request submitted successfully!");
       reset();
       setOpen(false);
-    } catch (error) {
+    } catch {
       toast.error("Failed to submit request. Please try again.");
     } finally {
       setLoading(false);
@@ -109,7 +109,7 @@ export function ServiceRequestModal({
           <div className="space-y-2">
             <Textarea
               placeholder="Tell me about your project..."
-              className="min-h-[100px]"
+              className="min-h-25"
               {...register("message", { required: true })}
             />
             {errors.message && (

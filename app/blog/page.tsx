@@ -1,4 +1,10 @@
 export const dynamic = "force-dynamic";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Read my latest thoughts on software engineering, design, and life.",
+};
 import { TrackedPostLink } from "@/components/TrackedPostLink";
 import {
   Card,

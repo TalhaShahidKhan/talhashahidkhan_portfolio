@@ -11,7 +11,32 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 import { RevealWrapper } from "@/components/ui/reveal-wrapper";
+import { Metadata } from "next";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const resolvedParams = await params;
+  const posts = await fetchPosts();
+  const post = posts.find((p: Post) => p.slug === resolvedParams.slug);
+
+  if (!post) {
+    return { title: "Post Not Found" };
+  }
+
+  return {
+    title: post.title,
+    // Extract a brief description from the markdown content (first 150 chars)
+    description: post.content.replace(/[#*`_\[\]]/g, '').slice(0, 150).trim() + "...",
+    openGraph: {
+      title: post.title,
+      description: post.content.replace(/[#*`_\[\]]/g, '').slice(0, 150).trim() + "...",
+      images: post.imageUrl ? [post.imageUrl] : [],
+    },
+  };
+}
 export default async function BlogPostPage({
   params,
 }: {
