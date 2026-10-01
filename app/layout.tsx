@@ -13,10 +13,41 @@ const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
   title: {
-    default: "Talha Shahid Khan | Portfolio",
+    default: "Talha Shahid Khan | Full Stack Developer & AI Engineer",
     template: "%s | Talha Shahid Khan",
   },
-  description: "Full Stack Developer specializing in modern web applications, design, and complex problem-solving.",
+  description: "Portfolio of Talha Shahid Khan, a Full Stack Developer and AI Engineer specializing in Python, JavaScript, Next.js, and modern web applications.",
+  keywords: [
+    "Talha Shahid Khan",
+    "Talha",
+    "Shahid Khan",
+    "Talha Khan",
+    "Web developer",
+    "Full Stack Developer",
+    "AI Engineer",
+    "Javascript expert",
+    "Python expert",
+    "Next.js Developer",
+    "React Developer",
+    "Software Engineer",
+    "Frontend Developer",
+    "Backend Developer",
+  ],
+  authors: [{ name: "Talha Shahid Khan" }],
+  creator: "Talha Shahid Khan",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://talhashahidkhan.com",
+    title: "Talha Shahid Khan | Full Stack Developer & AI Engineer",
+    description: "Portfolio of Talha Shahid Khan, a Full Stack Developer and AI Engineer specializing in Python, JavaScript, Next.js, and modern web applications.",
+    siteName: "Talha Shahid Khan Portfolio",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Talha Shahid Khan | Full Stack Developer & AI Engineer",
+    description: "Portfolio of Talha Shahid Khan, a Full Stack Developer and AI Engineer specializing in Python, JavaScript, Next.js, and modern web applications.",
+  },
 };
 
 import { PageTracker } from "@/components/PageTracker";
